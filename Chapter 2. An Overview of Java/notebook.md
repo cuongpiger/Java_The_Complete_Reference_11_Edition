@@ -2,7 +2,7 @@
 ## 1.1. Quy ước về cách đặt tên file trong Java
 * Giả sử ta tạo một file có tên là `Example.java`, với nội dung như sau:
 
-###### Example.java
+###### Example.java _[source code](./Example.java)_
 ```java
 /*
     Đây là một chương trình đơn giản của Java
