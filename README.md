@@ -19,4 +19,4 @@
   3.1. Statement `if`<br>
   3.2. Statement `for`<br>
   3.3. Sử dụng block code `{}`<br>
-### 💠 [Chapter 2: Data Types, Variables and Arrays](./Chapter%203.%20Data%20Types,%20Variables%20and%20Arrays) 
+### 💠 [Chapter 3: Data Types, Variables and Arrays](./Chapter%203.%20Data%20Types,%20Variables%20and%20Arrays) 
