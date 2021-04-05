@@ -15,3 +15,7 @@
    * Khai báo biến và gán giá trị cho biến.
    * Phương thức `print()` và `println()`.
    * Toán tử `+`, `*`, `=`. 
+3. Tìm hiểu sơ bộ hai statement điều kiện `if` và vòng lặp `for` _[Two Control Statement]_<br>
+  3.1. Statement `if`<br>
+  3.2. Statement `for`<br>
+  3.3. Sử dụng block code `{}`<br>

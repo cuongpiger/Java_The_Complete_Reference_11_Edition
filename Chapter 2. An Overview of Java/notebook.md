@@ -55,3 +55,78 @@ class Example2 {
 ```
 > ##### Output:
 > ![](../images/2.png)
+
+# 3. Tìm hiểu sơ bộ hai statement điều kiện `if` và vòng lặp `for` _[Two Control Statement]_
+## 3.1. Statement `if`
+###### IfSample.java _[source code](./IfSample.java)_
+```java
+/*
+    Đây là file `IfSample.java`
+*/
+class IfSample {
+    public static void main(String args[]) {
+        int x, y;
+
+        x = 10;
+        y = 20;
+
+        if (x < y) System.out.println("x nhỏ hơn y");
+
+        x = x * 2;
+        if (x == y) System.out.println("Bây giờ x bằng y");
+
+        x = x * 2;
+        if (x > y) System.out.println("Giờ thì x lớn hơn y");
+
+        // Dòng này ko thỏa if nên sẽ ko in ra
+        if (x == y) System.out.println("Dòng này sẽ ko dc in ra");
+    }
+}
+```
+
+> ##### Output:
+> ![](../images/3.png)
+
+## 3.2. Statement `for`
+###### ForTest.java _[source code](./ForTest.java)_
+```java
+/*
+    Đây là file `ForTest.java`
+*/
+class ForTest {
+    public static void main(String args[]) {
+        int x;
+
+        for (x = 0; x < 10; x = x + 1)
+            System.out.println("This is x: " + x);
+    }
+}
+```
+
+> ##### Output:
+> ![](../images/4.png)
+
+## 3.3. Sử dụng block code `{}`
+###### BlockTest.java _[source code](./BlockTest.java)_
+```java
+/*
+    File `Blockclass BlockTest.java`
+*/
+class BlockTest {
+    public static void main(String args[]) {
+        int x, y;
+        
+        y = 20;
+
+        for (x = 0; x < 10; x++) {
+            System.out.println("This is x: " + x);
+            System.out.println("This is y: " + y);
+
+            y = y - 2;
+        }
+    }
+}
+```
+
+> ##### Output:
+> ![](../images/5.png)
