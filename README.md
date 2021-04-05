@@ -7,4 +7,4 @@
 
 # Contents
 
-* ##### [Chapter 2: Tổng quan về Java](./Chapter\ 2.\ An\ Overview\ of\ Java) 
+* ##### [Chapter 2: Tổng quan về Java](./Chapter%202.%20An%20Overview%20of%20Java) 
