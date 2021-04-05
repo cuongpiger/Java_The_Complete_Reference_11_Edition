@@ -32,3 +32,26 @@ java Example
 ```
   dưới đây là kết quả xuất ra terminal:
     ![](../images/1.png)
+
+# 2. Chương trình nhỏ thứ hai _[A Second Short Program]_
+* Cho đoạn mã `Example2.java` như sau:
+###### Example2.java _[source code](./Example2.java)_
+```java
+/*
+    Đây là file Example2.java
+*/
+class Example2 {
+    public static void main(String args[]) {
+        int num; // khai báo một biến dc gọi là `num`
+        num = 100; // gán giá tri 100 cho biến `num`
+
+        System.out.println("Đây là biến num: " + num);
+
+        num = num * 2;
+        System.out.print("Giá trị của biến num sau khi nhân 2 là ");
+        System.out.println(num);
+    }
+}
+```
+> ##### Output:
+> ![](../images/2.png)
