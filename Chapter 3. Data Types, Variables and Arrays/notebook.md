@@ -138,3 +138,19 @@ class BoolTest {
 > ![](../images/10.png)
 
 # 6. Biến _[Variables]_
+###### DynInit.java _[source code](./DynInit.java)_
+```java
+/*
+    File `DynInit.java`
+*/
+class DynInit {
+    public static void main(String args[]) {
+        double a = 3., b = 4.;
+        double c = Math.sqrt(a*a + b*b);
+
+        System.out.println("Hypotenuse is " + c);
+    }
+}
+```
+> ##### Output:
+> ![](../images/11.png)
