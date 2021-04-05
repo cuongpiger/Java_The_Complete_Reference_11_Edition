@@ -293,4 +293,109 @@ class Promote {
 * Biểu thức con `(f * b)` dc thăng cấp thành `float`, sau đó `(i / c)` dc thăng cấp thành `int`, tiếp theo `(d * s)` dc thăng cấp thành `double`, cuối cùng ta có `float` + `int` - `double` nên toàn bộ dc thăng cấp lên `double` nên kiểu của toàn bộ biểu thức là `double`.
 
 # 9. Mảng _[Arrays]_
+* Cú pháp khai báo một mảng `array-var = new type[size]`, trong đó `array-var` là tên biến, `type` là kiểu dữ liệu của của toàn bộ mảng `array-var` và `size` dùng để chỉ định số phần tử trong `array-var`.
+
+```java
+month_days = new int[12];
+```
+* Đoạn code trên khai báo một mảng gồm 12 phần tử có kiểu `int`.
+* Khi ta khởi tạo một mảng, Java sẽ tự động phát sinh giá trị ban đầu cho toàn bộ mảng, quy tắc như sau:
+  * Nếu mảng thuộc nhóm số thì toàn bộ các phần tử trong mảng dc khởi tạo giá trị ban đầu là `0`.
+  * Nếu mảng thuộc nhóm **boolean** thì toàn bộ mảng sẽ dc khởi tạo là `false`.
+  * Nếu mảng tham chiếu đến một **object** _(tìm hiểu sau)_, thì toàn bộ mảng sẽ dc khởi tạo là `null`.
+
+###### Array.java _[source code](./Array.java)_
+```java
+/*
+    File `Array.java`
+*/
+class Array {
+    public static void main(String args[]) {
+        int month_days[];
+        month_days = new int[12];
+
+        month_days[0] = 31;
+        month_days[1] = 28;
+        month_days[2] = 31;
+        month_days[3] = 30;
+        month_days[4] = 31;
+        month_days[5] = 30;
+        month_days[6] = 31;
+        month_days[7] = 31;
+        month_days[8] = 30;
+        month_days[9] = 31;
+        month_days[10] = 30;
+        month_days[11] = 31;
+
+        System.out.println("April has " + month_days[3] + " days");
+    }
+}
+```
+
+> ##### Output:
+> ![](../images/16.png)
+
+###### AutoArray.java _[source code](./AutoArray.java)_
+```java
+/*
+    File `AutoArray.java`
+*/
+class AutoArray {
+    public static void main(String args[]) {
+        int month_days[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+        System.out.println("April has " + month_days[3] + " days.");
+    }
+}
+```
+
+> ###### Output:
+> ![](../images/17.png)
+
+###### Average.java _[source code](./Average.java)_
+```java
+/*
+    File `Average.java`
+*/
+class Average {
+    public static void main(String args[]) {
+        double nums[] = { 10.1, 11.2, 12.3, 13.4, 14.5 };
+        double result = 0;
+        
+        for (int i = 0; i < 5; ++i)
+            result += nums[i];
+
+        System.out.println("Average is " + result/5);
+    }
+}
+```
+
+> ##### Output:
+> ![](../images/18.png)
+
+###### TwoDArray.java _[source code](./TwoDArray.java)_
+```java
+/*
+    File `TwoDArray.java`
+*/
+class TwoDArray {
+    public static void main(String args[]) {
+        int twoD[][] = new int[4][5];
+        int i, j, k = 0;
+
+        for (i = 0; i < 4; ++i) {
+            for (j = 0; j < 5; ++j) {
+                twoD[i][j] = k++;
+                System.out.print(twoD[i][j] + " ");
+            }
+            
+            System.out.println();
+        }
+    }
+}
+```
+
+> ##### Output:
+> ![](../images/19.png)
+
 
