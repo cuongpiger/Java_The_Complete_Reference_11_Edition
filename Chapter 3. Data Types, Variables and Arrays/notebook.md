@@ -241,7 +241,7 @@ class Conversion {
 > ##### Output:
 > ![](../images/14.png)
 
-# 8. Tự động thăng hạng kiểu trong biểu thức _[Automatic type promotion in Expressions]_
+# 8. Tự động thăng hạng kiểu dữ liệu trong biểu thức _[Automatic type promotion in Expressions]_
 * Giả sử ta có đoạn mã sau:
 ```java
 byte a = 40;
@@ -304,6 +304,7 @@ month_days = new int[12];
   * Nếu mảng thuộc nhóm **boolean** thì toàn bộ mảng sẽ dc khởi tạo là `false`.
   * Nếu mảng tham chiếu đến một **object** _(tìm hiểu sau)_, thì toàn bộ mảng sẽ dc khởi tạo là `null`.
 
+## 9.1. Mảng một chiều
 ###### Array.java _[source code](./Array.java)_
 ```java
 /*
@@ -373,6 +374,7 @@ class Average {
 > ##### Output:
 > ![](../images/18.png)
 
+## 9.2. Mảng hai chiều
 ###### TwoDArray.java _[source code](./TwoDArray.java)_
 ```java
 /*
@@ -398,4 +400,149 @@ class TwoDArray {
 > ##### Output:
 > ![](../images/19.png)
 
+###### Matrix.java _[source code](./Matrix.java)_
+```java
+/*
+    File `Matrix.java`
+*/
+class Matrix {
+    public static void main(String args[]) {
+        double m[][] = {
+            {0*0, 1*0, 2*0, 3*0},
+            {0*1, 1*1, 2*1, 3*1},
+            {0*2, 1*2, 2*2, 3*2},
+            {0*3, 1*3, 2*3, 3*3}
+        };
 
+        for (int i = 0; i < 4; ++i) {
+            for (int j = 0; j < 4; ++j)
+                System.out.print(m[i][j] + " ");
+
+            System.out.println();
+        }
+    }
+}
+```
+
+> ##### Output:
+> ![](../images/21.png)
+
+## 9.3. Ma trận răng cưa
+###### TwoDAgain.java _[source code](./TwoDAgain.java)_
+```java
+/*
+    File `TwoDAgain.java`
+*/
+class TwoDAgain {
+    public static void main(String args[]) {
+        int twoD[][] = new int[4][];
+
+        for (int i = 0; i < 4; ++i)
+            twoD[i] = new int[i + 1];
+        
+        int k = 0;
+        for (int i = 0; i < 4; ++i) 
+            for (int j = 0; j < i + 1; ++j)
+                twoD[i][j] = k++;
+
+        for (int i = 0; i < 4; ++i) {
+            for (int j = 0; j < i + 1; ++j)
+                System.out.print(twoD[i][j] + " ");
+
+            System.out.println();
+        }    
+    }
+}
+```
+
+> ##### Output:
+> ![](../images/20.png)
+
+## 9.4. Mảng ba chiều
+###### ThreeDMatrix.java _[source code](./ThreeDMatrix.java)_
+```java
+/*
+    File `ThreeDMatrix.java`
+*/
+class ThreeDMatrix {
+    public static void main(String args[]) {
+        int threeD[][][] = new int[3][4][5];
+
+        for (int i = 0; i < 3; ++i)
+            for (int j = 0; j < 4; ++j)
+                for (int k = 0; k < 5; ++k)
+                    threeD[i][j][k] = i*j*k;
+
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 4; ++j) {
+                for (int k = 0; k < 5; ++k)
+                    System.out.print(threeD[i][j][k] + " ");
+
+                System.out.println();
+            }
+
+            System.out.println();
+        }
+    }
+}
+```
+
+> ##### Output:
+> ![](../images/22.png)
+
+## 9.5. Các cách khai báo mảng độc lạ
+* Có thể khai báo mảng một chiều bằng hai cách dưới đây:
+```java
+int arr1[] = new int[3];
+int[] arr2 = new int[3];
+```
+* Tương tự, mảng hai chiều có thể khai báo như sau:
+```java
+char chars1[][] = new char[3][4];
+char[][] chars2 = new char[3][4];
+```
+* Có thể khai báo nhiều mảng cùng một lúc:
+```java
+int[] arr1, arr2, arr3;
+int arr1[], arr2[], arr3[];
+```
+
+# 10. Biến suy luận _[Type Inference with Local variables]_
+###### VarDemo.java _[source code](./VarDemo.java)_
+```java
+/*
+    File `VarDemo.java`
+*/
+class VarDemo {
+    public static void main(String args[]) {
+        var avg = 10.; // khai báo một biến suy luận avg, lúc này type của nó là double
+        System.out.println("Value of avg: " + avg);
+
+        int var = 1; // khai báo một biến có tên là `var` có type là int
+        System.out.println("Value of var: " + var);
+
+        // điều thú vị chổ này là ta vừa khai báo một biến suy luận và nhận giá trị của biến ta
+        // đặt tên là `var` trc đó sau đó nhân cho -1
+        var k = -var; 
+        System.out.println("Value of k: " + k);
+    }
+}
+```
+
+> ##### Output:
+> ![](../images/23.png)
+
+## 10.1. Cẩn thận khi sử dụng biến suy luận
+* Có một vài lưu ý cần nhớ khi sử dụng biến suy luận vs mảng như sau:
+```java
+var my_arr = new int[10]; // hợp lệ
+var[] my_arr = new int[10]; // ko hợp lệ
+var my_arr = { 1, 2, 3 }; // kok hợp lệ
+```
+
+* Ngoài ra, nếu khai báo biến suy luận nhưng ko gán cho nó giá trị thì cũng ko dc, ví dụ như sau:
+```java
+var cnt; // lỗi, do ko khởi tạo giá trị ban đầu
+```
+* Ngoài ra, cần nhớ thêm là `var` chỉ có thể sử dụng để khai báo **local variables**, nó ko thể sử dụng khi khai báo các **instance variable** _(biến của `class`, nằm ngoài các method, constructor)_, tham số hoặc kiểu dữ liệu trả về.
+* Một hạn chế khác của biến suy luận là mỗi lần chỉ có thể khai báo duy nhất một biến và ko dc phép gán giá trị khởi tạo cho nó là `null`.
