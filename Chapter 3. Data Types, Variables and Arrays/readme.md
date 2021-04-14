@@ -537,7 +537,7 @@ class VarDemo {
 ```java
 var my_arr = new int[10]; // hợp lệ
 var[] my_arr = new int[10]; // ko hợp lệ
-var my_arr = { 1, 2, 3 }; // kok hợp lệ
+var my_arr = { 1, 2, 3 }; // ko hợp lệ
 ```
 
 * Ngoài ra, nếu khai báo biến suy luận nhưng ko gán cho nó giá trị thì cũng ko dc, ví dụ như sau:
