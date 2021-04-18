@@ -134,4 +134,104 @@ class BoxDemo4 {
 ```
 ![](../images/27.png)
 
+## 3.2. Phương thức có tham số _[Adding a Method That Takes Parameters]_
+###### BoxDemo5.java _[source code](./BoxDemo5.java)_
+```java
+class Box {
+    double width, height, depth;
 
+    double volume() {
+        return width * height * depth;
+    }
+
+    void setDim(double w, double h, double d) {
+        width = w;
+        height = h;
+        depth = d;
+    }
+}
+
+class BoxDemo5 {
+    public static void main(String args[]) {
+        Box box1 = new Box();
+        Box box2 = new Box();
+        double vol;
+
+        box1.setDim(10, 20, 15);
+        box2.setDim(3, 6, 9);
+
+        vol = box1.volume();
+        System.out.println("Thể tích box1 là: " + vol);
+
+        vol = box2.volume();
+        System.out.println("Thể tích box2 là: " + vol);
+    }
+}
+```
+![](../images/28.png)
+
+# 4. Constructor
+###### BoxDemo6.java _[source code](./BoxDemo6.java)_
+```java
+class Box {
+    double width, height, depth;
+
+    Box() {
+        System.out.println("Constructing Box");
+        width = 10;
+        height = 10;
+        depth = 10;
+    }
+
+    double volume() {
+        return width * height * depth;
+    }
+}
+
+class BoxDemo6 {
+    public static void main(String args[]) {
+        Box box1 = new Box();
+        Box box2 = new Box();
+        double vol;
+
+        vol = box1.volume();
+        System.out.println("Thể tích box1 là: " + vol);
+
+        vol = box2.volume();
+        System.out.println("Thể tích box2 là: " + vol);
+    }
+}
+```
+![](../images/29.png)
+
+## 4.1. Truyền tham số vào Constructor _[Paramterized Constructors]_
+```java
+class Box {
+    double width, height, depth;
+
+    Box(double w, double h, double d) {
+        width = w;
+        height = h;
+        depth = d;
+    }
+
+    double volume() {
+        return width * height * depth;
+    }
+}
+
+class BoxDemo7 {
+    public static void main(String args[]) {
+        Box box1 = new Box(10, 20, 15);
+        Box box2 = new Box(3, 6, 9);
+        double vol;
+
+        vol = box1.volume();
+        System.out.println("Thể tích box1 là: " + vol);
+
+        vol = box2.volume();
+        System.out.println("Thể tích box2 là: " + vol);
+    }
+}
+```
+![](../images/30.png)
