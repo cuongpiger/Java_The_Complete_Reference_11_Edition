@@ -255,3 +255,180 @@ class PassObjRef {
 }
 ```
 ![](../images/38.png)
+
+# 4. Phương thức trả về object _[Returning Objects]_
+###### RetOb.java _[source code](./RetOb.java)_
+```java
+class Test {
+    int a;
+
+    Test(int i) {
+        a = i;
+    }
+
+    Test incrByTen() {
+        return new Test(a + 10);
+    }
+}
+
+
+class RetOb {
+    public static void main(String args[]) {
+        Test ob1 = new Test(2);
+        Test ob2;
+
+        ob2 = ob1.incrByTen();
+
+        System.out.println("ob1.a: " + ob1.a);
+        System.out.println("ob2.a: " + ob2.a);
+
+        ob2 = ob2.incrByTen();
+        System.out.println("ob2.a sau khi gọi p.thức incrByTen() hai lần: " + ob2.a);
+    }
+}
+```
+![](../images/39.png)
+
+# 5. Đệ quy _[Recursion]_
+###### Recursion.java _[source code](./Recursion.java)_
+```java
+class Factorial {
+    int fact(int n) {
+        int res;
+
+        if (n == 1) {
+            return 1;
+        }
+
+        res = fact(n - 1) * n;
+        return res;
+    }
+}
+
+class Recursion {
+    public static void main(String args[]) {
+        Factorial f = new Factorial();
+
+        System.out.println("3 giai thừa bằng " + f.fact(3));
+        System.out.println("4 giai thừa bằng " + f.fact(4));
+        System.out.println("5 giai thừa bằng " + f.fact(5));
+    }
+}
+```
+![](../images/40.png)
+
+###### Recursion2.java _[source code](./Recursion2.java)_
+```java
+class RecTest {
+    int values[];
+
+    RecTest(int i) {
+        values = new int[i];
+    }
+
+    void printArray(int i) {
+        if (i == 0) return;
+
+        printArray(i - 1);
+        System.out.println("[" + (i - 1) + "] " + values[i - 1]);
+    }
+}
+
+class Recursion2 {
+    public static void main(String args[]) {
+        RecTest ob = new RecTest(10);
+
+        for (int i = 0; i < 10; ++i) {
+            ob.values[i] = i;
+        }
+
+        ob.printArray(10);
+    }
+}
+```
+![](../images/41.png)
+
+# 6. Quyền truy cập _[Introducing Access Control]_
+* Hãy bắt đầu với hai quyền là **public** và **private**:
+###### AccessTest.java _[source code](./AccessTest.java)_
+```java
+class Test {
+    int a;
+    public int b;
+    private int c;
+
+    void setc(int i) {
+        c = i;
+    }
+
+    int getc() {
+        return c;
+    }
+}
+
+class AccessTest {
+    public static void main(String args[]) {
+        Test ob = new Test();
+        ob.a = 10;
+        ob.b = 20;
+
+        // ob.c = 100; // dòg này sai vì `c` dc định nghĩa là private
+        ob.setc(100);
+        System.out.println("Giá trị của a, b, c lần lượt là: " + ob.a + " " + ob.b + " " + ob.getc());
+    }
+}
+```
+![](../images/42.png)
+
+###### TestStack.java _[source code](./TestStack.java)_
+```java
+class Stack {
+    private int stack[] = new int[10];
+    private int tos;
+
+    Stack() {
+        tos = -1;
+    }
+
+    void push(int item) {
+        if (tos == 9) {
+            System.out.println("Stack is fulll");
+        } else {
+            stack[++tos] = item;
+        }
+    }
+
+    int pop() {
+        if (tos < 0) {
+            System.out.println("Stack underflow");
+            return 0;
+        }
+
+        return stack[tos--];
+    }
+}
+
+class TestStack {
+    public static void main(String args[]) {
+        Stack stack1 = new Stack();
+        Stack stack2 = new Stack();
+
+        for (int i = 0; i < 10; ++i) stack1.push(i);
+        for (int i = 10; i < 20; ++i) stack2.push(i);
+
+        System.out.println("--> stack1:");
+        for (int i = 0; i < 10; ++i) {
+            System.out.println(stack1.pop());
+        }
+
+        System.out.println("--> stack2:");
+        for (int i = 0; i < 10; ++i) {
+            System.out.println(stack2.pop());
+        }
+
+        // stack1.tos = -2; // ko dc vì `tos` dc định nghĩa là private
+        // stack2.stack[3] = 100; // ko dc vì `stack` dc định nghiã là private
+    }
+}
+```
+![](../images/43.png)
