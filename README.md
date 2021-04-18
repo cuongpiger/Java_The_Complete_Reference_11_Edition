@@ -7,7 +7,7 @@
 
 # Contents
 
-### 💠 [Chapter 2: Tổng quan về Java](./Chapter%202.%20An%20Overview%20of%20Java) 
+### 💠 [Chapter 02: Tổng quan về Java](./Chapter%2002.%20An%20Overview%20of%20Java) 
 1. Chương trình đầu tiên - sơ bộ về Java _[A First Simple Program]_<br>
   1.1. Quy ước về cách đặt tên file trong Java<br>
   1.2. Biên dịch và chạy chương trình _[Compiling the program]_<br>
@@ -19,7 +19,7 @@
   3.1. Statement `if`<br>
   3.2. Statement `for`<br>
   3.3. Sử dụng block code `{}`<br>
-### 💠 [Chapter 3: Data Types, Variables and Arrays](./Chapter%203.%20Data%20Types,%20Variables%20and%20Arrays)
+### 💠 [Chapter 03: Data Types, Variables and Arrays](./Chapter%2003.%20Data%20Types,%20Variables%20and%20Arrays)
 1. Các kiểu dữ liệu nguyên thủy của Java _[The Primitive Types]_<br>
 2. Nhóm Integers _[Integers]_<br>
 3. Nhóm Floating-point numbers<br>
