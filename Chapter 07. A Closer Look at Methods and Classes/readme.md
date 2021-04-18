@@ -432,3 +432,87 @@ class TestStack {
 }
 ```
 ![](../images/43.png)
+
+# 7. `static` _[Understanding static]_
+* Đôi khi, chúng ta muốn tạo ra một thuộc tính của một class mà toàn bộ các object dc tạo ra từ class này đều có thể truy cập vào nó, ns dễ  hiểu nếu một object nào đó chỉnh sửa thuộc tính này thì toàn bộ các object khác cũng sẽ nhận dc giá trị mới của thuộc tính này, tức thuộc tính này chỉ có một vùng nhớ duy nhất nhưng toàn bộ các object thuộc class này đều có thể sử dụng nó.
+* Để tạo ra một thuộc tính như vậy, thì ta dùng `static`.
+* Một cách bao quát, một thuộc tính dc định nghĩa là `static` thì lúc này nó có nghĩa là toàn cục trên toàn bộ class của nó, khi một object dc khai báo sẽ ko có một bản sao của thuộc tính `static` này dc tạo ra mà toàn bộ object thuộc class này sẽ dùng chung một thuộc tính `static` này.
+* Ta cũng có thể định nghĩa `static` cho các phương thức, nhưng cần lưu ý:
+  * Chúng chỉ có thể gọi các phương thức `static` khác trong chính class của nó.
+  * Chúng chỉ có thể truy cập đến các thuộc tính `static`.
+  * Ko thể dùng `this` hoặc `super` _(tìm hiểu 2 keyword này sau trong chương 8)_.
+* Trong trường hợp ta cần thực hiện một vài tính toán trong biến `static` trc khi một object dc `new` ra, thì ta sẽ khai báo một **khối tĩnh**, khối này sẽ chạy duy nhất một lần khi object đầu tiên tham chiều đến class này.
+###### UseStatic.java _[source code](./UseStatic.java)_
+```java
+class UseStatic {
+    static int a = 3;
+    static int b;
+    int c = 100;
+
+    static void meth(int x) {
+        System.out.println("x = " + x);
+        System.out.println("a = " + a);
+        System.out.println("b = " + b);
+        // System.out.println("c = " + c); // sai vì static method chỉ có thể truy cập đến các static variable
+    }
+
+    // khai báo một static block (khối tĩnh)
+    static {
+        System.out.println("Đây là khối tĩnh dc khai báo");
+        b = a * 4;
+        // c = 10; // dòng này cũng sai, vì statai method chỉ có thể truy cập vào static variable
+    }
+
+    public static void main(String args[]) {
+        System.out.println("--> Gọi hàm meth() lần đầu");
+        meth(42);
+
+        System.out.println("--> Gọi hàm meth() lần hai");
+        meth(69);
+    }
+}
+```
+![](../images/44.png)
+* Khôi tĩnh chỉ chạy duy nhất một lần khi object đầu tiên tham chiếu đến class.
+
+<hr>
+
+* Ngoài ra, từ một class cụ thể nào đó, ta hoàn toàn có thể truy cập vào các static variable và static method của một class khác như sau:
+###### StaticByName.java _[source code](./StaticByName.java)_
+```java
+class StaticDemo {
+    static int a = 42;
+    static int b = 99;
+
+    static void callme() {
+        System.out.println("a = " + a);
+    }
+}
+
+class StaticByName {
+    public static void main(String args[]) {
+        StaticDemo.callme(); // gọi static method `callme` của class `StaticDemo`
+        System.out.println("StaticDemo.b = " + StaticDemo.b);
+    }
+}
+```
+![](../images/45.png)
+
+# 8. `final` _[Introducing final]_
+###### FinalTest.java _[source code](./FinalTest.java)_
+```java
+class FinalTest {
+    final String DATABASE = "./data/db_STUDENTS.txt";
+
+    void showDB() {
+        // DATABASE = "./data/db_PRODUCTS.txt"; // sai, ko thể thay đổi nếu dc định nghĩa là final
+        System.out.println("DATABASE's path: " + DATABASE);
+    }
+
+    public static void main(String args[]) {
+        FinalTest tmp = new FinalTest();
+        tmp.showDB();
+    }
+}
+```
+![](../images/46.png)
