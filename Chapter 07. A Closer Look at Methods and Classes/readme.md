@@ -732,3 +732,221 @@ class StringDemo3 {
 }
 ```
 ![](../images/54.png)
+
+# 12. Sử dụng đối số dòng lệnh _[Using Command-Line Arguments]_
+###### CommandLine.java _[source code](./CommandLine.java)_
+```java
+class CommandLine {
+    public static void main(String args[]) {
+        for (int i = 0; i < args.length; ++i) {
+            System.out.println("args[" + i + "]: " + args[i]);
+        }
+    }
+}
+```
+![](../images/55.png)
+
+# 13. Varargs - Variable-Length Arguments
+###### PassArray.java _[source code](./PassArray.java)_
+```java
+class PassArray {
+    static void vaTest(int v[]) {
+        System.out.println("Số lượng args là: " + v.length);
+        System.out.print("Các giá trị: ");
+
+        for (int x: v) {
+            System.out.print(x + " ");
+        }
+
+        System.out.println();
+    }
+
+    public static void main(String args[]) {
+        int n1[] = {10};
+        int n2[] = {1, 2, 3};
+        int n3[] = {};
+
+        vaTest(n1);
+        vaTest(n2);
+        vaTest(n3);
+    }
+}
+```
+![](../images/56.png)
+
+###### Varargs.java _[source code](./Varargs.java)_
+```java
+class VarArgs {
+    static void vaTest(int ...v) {
+        System.out.println("Số lượng args: " + v.length);
+        System.out.print("Các thành phần của args: ");
+
+        for (int x: v) {
+            System.out.print(x + " ");
+        }
+
+        System.out.println();
+    }
+
+    public static void main(String args[]) {
+        vaTest(10);
+        vaTest(1, 2, 3);
+        vaTest();
+    }
+}
+```
+![](../images/57.png)
+
+###### VarArgs2.java _[source code](./VarArgs2.java)_
+```java
+class VarArgs2 {
+    static void vaTest(String msg, int ...v) {
+        System.out.println("msg: " + msg + " - v.length: " + v.length);
+        System.out.print("Content of v: ");
+
+        for (int x: v) {
+            System.out.print(x + " ");
+        }
+        System.out.println();
+    }
+
+    public static void main(String args[]) {
+        vaTest("Hủ tiếu", 10);
+        vaTest("trân châu, plan, kem", 1, 2, 3);
+        vaTest("Ko có varargs");
+    }
+}
+```
+![](../images/58.png)
+
+## 13.1. Overloading Vararg Methods
+###### VarArgs3.java _[source code](./VarArgs3.java)_
+```java
+class VarArgs3 {
+    static void vaTest(int ...v) {
+        System.out.print("vaTest(int ...v): " + "Number of args: " + v.length + " Contents; ");
+
+        for (int x: v) {
+            System.out.print(x + " ");
+        }
+
+        System.out.println();
+    }
+
+    static void vaTest(boolean ...v) {
+        System.out.print("vaTest(boolean ...v): " + "Number of args: " + v.length + " Contents; ");
+        for (boolean x: v) {
+            System.out.print(x + " ");
+        }
+
+        System.out.println();
+    }
+
+    static void vaTest(String msg, int ...v) {
+        System.out.print("vaTest(String, int ...): " + msg + " v.length: " + v.length + " Contents: ");
+
+        for (int x: v) {
+            System.out.print(x + " ");
+        }
+
+        System.out.println();
+    }
+
+    public static void main(String args[]) {
+        vaTest(1, 2, 3);
+        vaTest("Testing", 10, 20);
+        vaTest(true, false, false);
+    }
+}
+```
+![](../images/59.png)
+
+###### VarArgs4.java _[source code](./VarArgs4.java)_
+```java
+public class VarArgs4 {
+    static void vaTest(int ...v) {
+        System.out.print("vaTest(int ...v): " + "Number of args: " + v.length + " Contents; ");
+
+        for (int x: v) {
+            System.out.print(x + " ");
+        }
+
+        System.out.println();
+    }
+
+    static void vaTest(boolean ...v) {
+        System.out.print("vaTest(boolean ...v): " + "Number of args: " + v.length + " Contents; ");
+        for (boolean x: v) {
+            System.out.print(x + " ");
+        }
+
+        System.out.println();
+    }
+
+    public static void main(String args[]) {
+        vaTest(1, 2, 3); //OK
+        vaTest(true, false, false); //OK
+        // vaTest(); //Error, vì ko có tham số truyền vào, Java ko biết nên áp dụng
+                    // phương thức vaTest(int ...) hay vaTest(boolean ...)
+    }
+}
+```
+![](../images/60.png)
+
+###### VarArgs5.java _[source code](./VarArgs5.java)_
+```java
+import java.util.stream.StreamSupport;
+
+class VarArgs5 {
+    static void vaTest(int x, int ...v) {
+        System.out.println("vaTest(int, int ...) - x: " + x);
+        System.out.print("v contents: ");
+
+        for (int val: v) {
+            System.out.print(val + " ");
+        }
+    }
+
+    static void vaTest(int x) {
+        System.out.println("vaTest(int) - x: " + x);
+    }
+
+    public static void main(String args[]) {
+        vaTest(1);
+    }
+}
+```
+![](../images/61.png)
+
+# 14. Sử dụng biến suy luận vs defined class _[Local Variable Type Interence with Reference Types]_
+###### RefVarDemo.java _[source code](./RefVarDemo.java)_
+```java
+class MyClass {
+    private int i;
+
+    MyClass(int k) {
+        i = k;
+    }
+
+    int geti() {
+        return i;
+    }
+
+    void seti(int k) {
+        if (k >= 0) {
+            i = k;
+        }
+    }
+}
+
+class RefVarDemo {
+    public static void main(String args[]) {
+        var mc = new MyClass(10);
+
+        System.out.println("Giá trị của i trong mc: " + mc.geti());
+        mc.seti(69);
+        System.out.println("Giá trị của i trong mc sau khi set(): " + mc.geti());
+    }
+}
+```
+![](../images/62.png)
