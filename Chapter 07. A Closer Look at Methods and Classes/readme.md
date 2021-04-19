@@ -516,3 +516,161 @@ class FinalTest {
 }
 ```
 ![](../images/46.png)
+
+# 9. Quay lại với mảng _[Arrays Revisited]_
+###### Length.java _[source code](./Length.java)_
+```java
+class Length {
+    public static void main(String args[]) {
+        int a1[] = new int[10];
+        int a2[] = {3, 5, 7, 1, 8, 99, 44, -10};
+        int a3[] = {4, 3, 2, 1};
+
+        System.out.println("Chiều dài của mảng a1 là: " + a1.length);
+        System.out.println("Chiều dài của mảng a2 là: " + a2.length);
+        System.out.println("Chiều dài của mảng a3 là: " + a3.length);
+    }
+}
+```
+![](../images/47.png)
+
+###### TestStack2.java _[source code](./TestStack2.java)_
+```java
+import javax.swing.text.SimpleAttributeSet;
+
+class Stack {
+    private int stack[];
+    private int tos;
+
+    Stack(int size) {
+        stack = new int[size];
+        tos = -1;
+    }
+
+    void push(int item) {
+        if (tos == stack.length - 1) {
+            System.out.println("Stack is full");
+        } else {
+            stack[++tos] = item;
+        }
+    }
+
+    int pop() {
+        if (tos < 0) {
+            System.out.println("Stack underflow");
+            return 0;
+        }
+
+        return stack[--tos];
+    }
+}
+
+class TestStack2 {
+    int a = 10;
+
+    public static void main(String args[]) {
+        Stack stack1 = new Stack(5);
+        Stack stack2 = new Stack(8);
+
+        System.out.println("--> Đây là stack1:");
+        for (int i = 0; i < 5; ++i) {
+            System.out.println(stack1.pop());
+        }
+
+        System.out.println("--> Đây là stack2:");
+        for (int i = 0; i < 8; ++i) {
+            System.out.println(stack2.pop());
+        }
+    }
+}
+```
+![](../images/48.png)
+
+# 10. Nested & inner class _[Introducing Nested and Inner Classes]_
+###### InnerClassDemo.java _[source code](./InnerClassDemo.java)_
+```java
+class Outer {
+    int outer_x = 100;
+
+    void test() {
+        Inner inner = new Inner();
+        inner.display();
+    }
+
+    class Inner {
+        void display() {
+            System.out.println("Hàm Inner.display - outer_x: " + outer_x); // biến outer_x nằm ngoài lớp Inner
+        }
+    }
+}
+
+class InnerClassDemo {
+    public static void main(String args[]) {
+        Outer outer = new Outer();
+        outer.test();
+    }
+}
+```
+![](../images/49.png)
+
+###### InnerClassDemo1.java _[source code](./InnerClassDemo1.java)_
+```java
+class Outer {
+    int outer_x = 100;
+
+    void test() {
+        Inner inner = new Inner();
+        inner.display();
+    }
+
+    class Inner {
+        int y = 10; // y là biến local thuộc Inner
+
+        void display() {
+            System.out.println("Inside Inner.display(), call Outer.outer_x = " + outer_x);
+        }
+    }
+
+    void showy() {
+        System.out.println("--> This is Outer.showy()");
+        // System.out.println(y); // dòg này sai, ko thể access đến biến Inner.y dc
+    }
+}
+
+class InnerClassDemo1 {
+    public static void main(String args[]) {
+        Outer outer = new Outer();
+        outer.test();
+        outer.showy();
+    }
+}
+```
+![](../images/50.png)
+
+###### InnerClassDemo2.java _[source code](./InnerClassDemo2.java)_
+```java
+class Outer {
+    int outer_x = 100;
+
+    void test() {
+        for (int i = 0; i < 10; ++i) {
+            class Inner {
+                void display() {
+                    System.out.println("Inner.display() - outer_x = " + outer_x);
+                }
+            }
+
+            Inner inner = new Inner();
+            inner.display();
+        }
+    }
+}
+
+class InnerClassDemo2 {
+    public static void main(String args[]) {
+        Outer outer = new Outer();
+        outer.test();
+    }
+}
+```
+![](../images/51.png)
