@@ -453,3 +453,162 @@ class CallingCons {
 }
 ```
 ![](../images/70.png)
+
+# 5. Method Overriding
+###### Override.java _[source code](./Override.java)_
+```java
+class A {
+    int i, j;
+    
+    A(int a, int b) {
+        i = a;
+        j = b;
+    }
+    
+    void show() {
+        System.out.println("i & j: " + i + " " + j);
+    }
+}
+
+class B extends A {
+    int k;
+
+    B(int a, int b, int c) {
+        super(a, b);
+        k = c;
+    }
+
+    void show() {
+        System.out.println("k: " + k);
+    }
+}
+
+class Override {
+    public static void main(String args[]) {
+        B b = new B(1, 2, 3);
+        b.show();
+    }
+}
+```
+![](../images/71.png)
+
+###### Override2.java _[source code](./Override2.java)_
+```java
+class A {
+    int i, j;
+
+    A(int a, int b) {
+        i = a;
+        j = b;
+    }
+
+    void show() {
+        System.out.println("i & j: " + i + " " + j);
+    }
+}
+
+class B extends A {
+    int k;
+
+    B(int a, int b, int c) {
+        super(a, b);
+        k = c;
+    }
+
+    void show() {
+        super.show();
+        System.out.println("k: " + k);
+    }
+}
+
+class Override2 {
+    public static void main(String args[]) {
+        B b = new B(1, 2, 3);
+        b.show();
+    }
+}
+```
+![](../images/72.png)
+
+###### Override3.java _[source code](./Override3.java)_
+```java
+class A {
+    int i, j;
+
+    A(int a, int b) {
+        i = a;
+        j = b;
+    }
+
+    void show() {
+        System.out.println("i & j: " + i + " " + j);
+    }
+}
+
+class B extends A {
+    int k;
+
+    B(int a, int b, int c) {
+        super(a, b);
+        k = c;
+    }
+
+    void show(String msg) {
+        System.out.println(msg + k);
+    }
+}
+
+class Override3 {
+    public static void main(String args[]) {
+        B b = new B(1, 2, 3);
+
+        b.show("Đây là k: "); // gọi hàm B.show()
+        b.show(); // gọi hàm A.show()
+    }
+}
+```
+![](../images/73.png)
+
+# 6. Điều phối phương thức động _[Dynamic Method Dispatch]_
+###### Dispatch.java _[source code](./Dispatch.java)_
+```java
+class A {
+    void callme() {
+        System.out.println("Class A.callme()");
+    }
+}
+
+class B extends A {
+    void callme() {
+        System.out.println("Class B.callme()");
+    }
+}
+
+class C extends A {
+    void callme() {
+        System.out.println("Class C.callme()");
+    }
+}
+
+class Dispatch {
+    public static void main(String args[]) {
+        A a = new A();
+        B b = new B();
+        C c = new C();
+
+        A r;
+
+        r = a;
+        r.callme();
+
+        r = b;
+        r.callme();
+
+        r = c;
+        r.callme();
+    }
+}
+```
+![](../images/74.png)
+
+## 6.1. Tại sao cần ghi đè các phương thưc _[Why Overridden Methods]_
