@@ -674,3 +674,61 @@ class InnerClassDemo2 {
 }
 ```
 ![](../images/51.png)
+
+# 11. class `String` _[Exploring the `String` class]_
+###### StringDemo.java _[source code](./StringDemo.java)_
+```java
+class StringDemo {
+    public static void main(String args[]) {
+        String s1 = "First String";
+        String s2 = "Second String";
+        String s3 = s1 + " + " + s2;
+
+        System.out.println(s1);
+        System.out.println(s2);
+        System.out.println(s3);
+    }
+}
+```
+![](../images/52.png)
+
+###### StringDemo2.java _[source code](./StringDemo2.java)_
+```java
+class StringDemo2 {
+    public static void main(String args[]) {
+        String s1 = "First String";
+        String s2 = "Second String";
+        String s3 = s1;
+
+        System.out.println("Chiều dài của s1: " + s1.length());
+        System.out.println("Kí tự tại index-3 của s1: " + s1.charAt(3));
+
+        if (s1.equals(s2)) {
+            System.out.println("s1 == s2");
+        } else {
+            System.out.println("s1 != s2");
+        }
+
+        if (s1.equals(s3)) {
+            System.out.println("s1 == s3");
+        } else {
+            System.out.println("s1 != s3");
+        }
+    }
+}
+```
+![](../images/53.png)
+
+###### StringDemo3.java _[source code](./StringDemo3.java)_
+```java
+class StringDemo3 {
+    public static void main(String args[]) {
+        String str[] = {"one", "two", "three"};
+
+        for (int i = 0; i < str.length; ++i) {
+            System.out.println("str[" + i + "]: " + str[i]);
+        }
+    }
+}
+```
+![](../images/54.png)
