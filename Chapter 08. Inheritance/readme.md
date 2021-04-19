@@ -211,3 +211,245 @@ class RefBox {
 
 # 2. Sử dụng `super` _[Using `super`]_
 ## 2.1. Sử dụng `super` để gọi các constructor của lớp cha từ lớp con _[Using `super` to Call Superclass Constructors]_
+###### DemoSuper.java _[source code](./DemoSuper.java)_
+```java
+class Box {
+    private double width, height, depth;
+
+    Box(Box other) {
+        width = other.width;
+        height = other.height;
+        depth = other.depth;
+    }
+
+    Box(double w, double h, double d) {
+        width = w;
+        height = h;
+        depth = d;
+    }
+
+    Box() {
+        width = height = depth = -1;
+    }
+
+    Box(double len) {
+        width = height = depth = len;
+    }
+
+    double volume() {
+        return width * height * depth;
+    }
+}
+
+class BoxWeight extends Box {
+    double weight;
+
+    BoxWeight(double w, double h, double d, double m) {
+        super(w, h, d);
+        weight = m;
+    }
+
+    BoxWeight(BoxWeight other) {
+        super(other);
+        weight = other.weight;
+    }
+
+    BoxWeight() {
+        super();
+        weight = -1;
+    }
+
+    BoxWeight(double len, double m) {
+        super(len);
+        weight = m;
+    }
+}
+
+class DemoSuper {
+    public static void main(String args[]) {
+        BoxWeight bw1 = new BoxWeight(10, 20, 15, 34.3);
+        BoxWeight bw2 = new BoxWeight(2, 3, 4, 0.076);
+        BoxWeight bw3 = new BoxWeight();
+        BoxWeight bw4 = new BoxWeight(3, 2);
+        BoxWeight bw5 = new BoxWeight(bw1);
+
+        System.out.println("Thể tích của bw1 là: " + bw1.volume());
+        System.out.println("Cân nặng của bw1 là: " + bw1.weight);
+        System.out.println();
+
+        System.out.println("Thể tích của bw2 là: " + bw2.volume());
+        System.out.println("Cân nặng của bw2 là: " + bw2.weight);
+        System.out.println();
+
+        System.out.println("Thể tích của bw3 là: " + bw3.volume());
+        System.out.println("Cân nặng của bw3 là: " + bw3.weight);
+        System.out.println();
+
+        System.out.println("Thể tích của bw4 là: " + bw4.volume());
+        System.out.println("Cân nặng của bw4 là: " + bw4.weight);
+        System.out.println();
+
+        System.out.println("Thể tích của bw5 là: " + bw5.volume());
+        System.out.println("Cân nặng của bw5 là: " + bw5.weight);
+        System.out.println();
+    }
+}
+```
+![](../images/67.png)
+
+## 2.2. Cách thứ hai sử dụng `super` _[A Second Use for `super`]_
+###### UseSuper.java _[source code](./UseSuper.java)_
+```java
+class A {
+    int i;
+}
+
+class B extends A {
+    int i; // biến nay sẽ ẩn biến i trong A, tức bây h gọi i thì Java sẽ hiểu là gọi B.i
+
+    B(int a, int b) {
+        super.i = a;
+        i = b;
+    }
+
+    void show() {
+        System.out.println("i trong lớp cha A: " + super.i);
+        System.out.println("i trong lớp con B: " + i);
+    }
+}
+
+class UseSuper {
+    public static void main(String args[]) {
+        B b = new B(1, 2);
+
+        b.show();
+    }
+}
+```
+![](../images/68.png)
+
+# 3. Cấu trúc phân đa cấp _[Creating a Multilevel Hierarchy]_
+###### DemoShipment.java _[source code](./DemoShipment.java)_
+```java
+class Box {
+    private double width, height, depth;
+
+    Box(Box other) {
+        width = other.width;
+        height = other.height;
+        depth = other.depth;
+    }
+
+    Box(double w, double h, double d) {
+        width = w;
+        height = h;
+        depth = d;
+    }
+
+    Box() {
+        width = height = depth = -1;
+    }
+
+    Box(double len) {
+        width = height = depth = len;
+    }
+
+    double volume() {
+        return width * height * depth;
+    }
+}
+
+class BoxWeight extends Box {
+    double weight;
+
+    BoxWeight(double w, double h, double d, double m) {
+        super(w, h, d);
+        weight = m;
+    }
+
+    BoxWeight(BoxWeight other) {
+        super(other);
+        weight = other.weight;
+    }
+
+    BoxWeight() {
+        super();
+        weight = -1;
+    }
+
+    BoxWeight(double len, double m) {
+        super(len);
+        weight = m;
+    }
+}
+
+class Shipment extends BoxWeight {
+    double cost;
+
+    Shipment(Shipment other) {
+        super(other);
+        cost = other.cost;
+    }
+
+    Shipment(double w, double h, double d, double m, double c) {
+        super(w, h, d, m);
+        cost = c;
+    }
+
+    Shipment() {
+        super();
+        cost = -1;
+    }
+
+    Shipment(double len, double m, double c) {
+        super(len, m);
+        cost = c;
+    }
+}
+
+class DemoShipment {
+    public static void main(String args[]) {
+        Shipment ship1 = new Shipment(10, 20, 15, 10, 3.41);
+        Shipment ship2 = new Shipment(2, 3, 4, .76, 1.28);
+
+        System.out.println("Thể tích của ship1 là: " + ship1.volume());
+        System.out.println("Cân nặng của ship1 là: " + ship1.weight);
+        System.out.println("Chi phí của ship1 là: " + ship1.cost);
+        System.out.println();
+
+        System.out.println("Thể tích của ship2 là: " + ship2.volume());
+        System.out.println("Cân nặng của ship2 là: " + ship2.weight);
+        System.out.println("Chi phí của ship2 là: " + ship2.cost);
+    }
+}
+```
+![](../images/69.png)
+
+# 4. Các constructors hoạt động như thế nào trong cấu trúc phân cấp _[When Constructors Are Executed]_
+###### CallingCons.java _[source code](./CallingCons.java)_
+```java
+class A {
+    A() {
+        System.out.println("Constructor A");
+    }
+}
+
+class B extends A {
+    B() {
+        System.out.println("Constructor B");
+    }
+}
+
+class C extends B {
+    C() {
+        System.out.println("Constructor C");
+    }
+}
+
+class CallingCons {
+    public static void main(String args[]) {
+        C c = new C();
+    }
+}
+```
+![](../images/70.png)

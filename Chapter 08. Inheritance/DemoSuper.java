@@ -1,5 +1,3 @@
-import javax.swing.text.BoxView;
-
 class Box {
     private double width, height, depth;
 
@@ -62,6 +60,22 @@ class DemoSuper {
 
         System.out.println("Thể tích của bw1 là: " + bw1.volume());
         System.out.println("Cân nặng của bw1 là: " + bw1.weight);
+        System.out.println();
 
+        System.out.println("Thể tích của bw2 là: " + bw2.volume());
+        System.out.println("Cân nặng của bw2 là: " + bw2.weight);
+        System.out.println();
+
+        System.out.println("Thể tích của bw3 là: " + bw3.volume());
+        System.out.println("Cân nặng của bw3 là: " + bw3.weight);
+        System.out.println();
+
+        System.out.println("Thể tích của bw4 là: " + bw4.volume());
+        System.out.println("Cân nặng của bw4 là: " + bw4.weight);
+        System.out.println();
+
+        System.out.println("Thể tích của bw5 là: " + bw5.volume());
+        System.out.println("Cân nặng của bw5 là: " + bw5.weight);
+        System.out.println();
     }
 }
