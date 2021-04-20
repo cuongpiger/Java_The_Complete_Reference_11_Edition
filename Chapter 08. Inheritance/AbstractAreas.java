@@ -1,5 +1,3 @@
-import java.io.FileReader;
-
 abstract class Figure {
     double dim1, dim2;
 

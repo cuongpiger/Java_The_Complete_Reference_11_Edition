@@ -672,6 +672,7 @@ class FindAreas {
 ![](../images/75.png)
 
 # 7. Lớp trừu tượng _[Using Abstract Classes]_
+* Khi một lớp con kế thừa một lớp abstract, thì lớp con này phải dc định nghĩa toàn bộ các phương thức abstract của lớp cha. Xem các ví dụ dưới đây.
 ###### AbstractDemo.java _[source code](./AbstractDemo.java)_
 ```java
 abstract class A {
@@ -701,8 +702,6 @@ class AbstractDemo {
 
 ###### AbstractAreas.java _[source code](./AbstractAreas.java)_
 ```java
-import java.io.FileReader;
-
 abstract class Figure {
     double dim1, dim2;
 
