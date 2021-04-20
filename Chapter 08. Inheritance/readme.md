@@ -612,3 +612,208 @@ class Dispatch {
 ![](../images/74.png)
 
 ## 6.1. Tại sao cần ghi đè các phương thưc _[Why Overridden Methods]_
+## 6.2. Applying Method Overriding
+###### FindAreas.java _[source code](./FindAreas.java)_
+```java
+class Figure {
+    double dim1, dim2;
+
+    Figure(double a, double b) {
+        dim1 = a; dim2 = b;
+    }
+
+    double area() {
+        System.out.println("Hàm tính diện tích cho class Figure ko dc định nghĩa");
+        return 0;
+    }
+}
+
+class Rectangle extends Figure {
+    Rectangle(double a, double b) {
+        super(a, b);
+    }
+
+    double area() {
+        System.out.println("Hàm tính diện tích cho class ectangle.");
+        return dim1 * dim2;
+    }
+}
+
+class Triangle extends Figure {
+    Triangle(double a, double b) {
+        super(a, b);
+    }
+
+    double area() {
+        System.out.println("Hàm tính diện tích cho class Triangle.");
+        return dim1 * dim2 / 2;
+    }
+}
+
+
+class FindAreas {
+    public static void main(String args[]) {
+        Figure f = new Figure(10, 10);
+        Rectangle r = new Rectangle(9, 5);
+        Triangle t = new Triangle(10, 8);
+        Figure fr;
+
+        fr = f;
+        System.out.println("Diện tích của Figure là: " + fr.area());
+
+        fr = r;
+        System.out.println("Diện tích của Rectangle là: " + fr.area());
+
+        fr = t;
+        System.out.println("Diện tích của Triangle là: " + fr.area());
+    }
+}
+```
+![](../images/75.png)
+
+# 7. Lớp trừu tượng _[Using Abstract Classes]_
+###### AbstractDemo.java _[source code](./AbstractDemo.java)_
+```java
+abstract class A {
+    abstract void callme();
+
+    void callmetoo() {
+        System.out.println("Hàm A.callmetoo() tồn tại ở thể vật chất");
+    }
+}
+
+class B extends A {
+    void callme() {
+        System.out.println("Hàm B.callme() dc gọi thông qua abstract A.");
+    }
+}
+
+class AbstractDemo {
+    public static void main(String args[]) {
+        B b = new B();
+
+        b.callme();
+        b.callmetoo();
+    }
+}
+```
+![](../images/76.png)
+
+###### AbstractAreas.java _[source code](./AbstractAreas.java)_
+```java
+import java.io.FileReader;
+
+abstract class Figure {
+    double dim1, dim2;
+
+    Figure(double a, double b) {
+        dim1 = a; dim2 = b;
+    }
+
+    abstract double area();
+}
+
+class Rectangle extends Figure {
+    Rectangle(double a, double b) {
+        super(a, b);
+    }
+
+    double area() {
+        System.out.println("Đây là Rectangle.area()");
+        return dim1 * dim2;
+    }
+}
+
+class Triangle extends Figure {
+    Triangle(double a, double b) {
+        super(a, b);
+    }
+
+    double area() {
+        System.out.println("Đây là Triangle.area()");
+        return dim1 * dim2 / 2;
+    }
+}
+
+class AbstractAreas {
+    public static void main(String args[]) {
+        // Figure f = new Figure(10, 10); // dòg này sai vì Figure bây h là lớp trừu tượng
+        Rectangle r = new Rectangle(9, 5);
+        Triangle t = new Triangle(10, 8);
+        Figure f;
+
+        f = r;
+        System.out.println("Diện tích hình chữ nhật lả: " + f.area());
+
+        f = t;
+        System.out.println("Diện tích hình tam giác là: " + f.area());
+    }
+}
+```
+![](../images/77.png)
+
+# 8. Sử dụng `final` với kế thừa _[Using `final` with Inheritance]_
+## 8.1. Sử dụng `final` để ngăn ghi đè `_[Using `final` to Prevent Overriding]_
+```java
+class A {
+    final void meth() {
+        System.out.println("Đây là hàm final meth của class A.");
+    }
+}
+
+class B extends A {
+    /* void meth() { // ko thể overriding hàm này
+        System.out.println("Hàm này ko hợp lệ.");
+    } */
+}
+```
+
+## 8.2. Sử dụng `final` để ngăn kế thừa _[Using `final` to Prevent Inheritance]_
+```java
+final class A {
+    // do something
+}
+
+// ko hợp lệ
+/* class B extends A {
+    // do something
+} */
+```
+
+# 9. Biến suy luận và kế thừa _[Local Variable Type Inference and Inheritance]_
+```java
+class MyClass {
+    // do something
+}
+
+class FirstDerivedClass extends MyClass {
+    int x;
+}
+
+class SecodnDerivedClass extends FirstDerivedClass {
+    int y;
+}
+
+class TypeInferenceAndInheritance {
+    static MyClass getObj(int which) {
+        switch (which) {
+            case 0: return new MyClass();
+            case 1: return new FirstDerivedClass();
+            default: return new SecodnDerivedClass();
+        }
+    }
+    
+    public static void main(String args[]) {
+        var mc1 = getObj(0);
+        var mc2 = getObj(1);
+        var mc3 = getObj(2);
+        /* Thực chất cả ba biến mc1, mc2, mc3 đều có type là MyClass, dù trong
+            hàm `getObj` ta đã trả về các class khác nhau dựa vào `which`
+            nhưng ta định nghĩa kiểu dữ liệu trả về của `getObj` là `MyClass`
+            nên khi ta dùng 2 dòng code dưới đây sẽ lỗi. */
+        
+        // mc2.x = 10; // lỗi vì MyClass ko có thuộc tính x;
+        // mc3.y = 10; // lỗi vì MyClass ko có thuộc tính y;
+    }
+}
+```
