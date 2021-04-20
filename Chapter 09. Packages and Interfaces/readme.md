@@ -43,5 +43,5 @@ class AccountBalance {
 </div>
 
 ## 2.1. _[An Access Example]_
-###### p1 _[source](./p1)_
+###### p1 _[source code](./p1)_
 ![](../images/80.png)
