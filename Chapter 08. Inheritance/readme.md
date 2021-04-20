@@ -817,3 +817,5 @@ class TypeInferenceAndInheritance {
     }
 }
 ```
+
+# 10. _[The Object Class]_
