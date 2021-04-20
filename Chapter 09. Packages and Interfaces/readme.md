@@ -1,3 +1,6 @@
+# 1. _[Packages]_
+###### mypack/AccountBalance.java _[source code](.mypack/../mypack/AccountBalance.java)_
+```java
 package mypack;
 
 class Balance {
@@ -29,3 +32,16 @@ class AccountBalance {
         for (var x: current) x.show();
     }
 }
+```
+![](../images/78.png)
+
+# 2. _[Packages and Member Access]_
+<div align="center">
+
+  ![](../images/79.png)
+
+</div>
+
+## 2.1. _[An Access Example]_
+###### p1 _[source](./p1)_
+![](../images/80.png)
