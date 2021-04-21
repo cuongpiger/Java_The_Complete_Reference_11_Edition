@@ -128,3 +128,251 @@ class SuperSubCatch {
     }
 }
 ```
+
+# 6. `try` lồng nhau _[Nested `try` Statements]_
+###### NestTry.java _[source code](./NestTry.java)_
+```java
+class NestTry {
+    public static void main(String args[]) {
+        try {
+            int a = args.length;
+            int b = 42 / a;
+
+            System.out.println("a = " + a);
+
+            try {
+                if (a == 1) {
+                    a = a/ (a - a);
+                }
+
+                if (a == 2) {
+                    int[] c = {1};
+                    c[42] = 99;
+                }
+            } catch (ArrayIndexOutOfBoundsException err) {
+                System.out.println("==> Lỗi tràn index mảng: " + err);
+            }
+        } catch (ArithmeticException err) {
+            System.out.println("==> Lỗi toán học: " + err);
+        }
+    }
+}
+```
+![](../images/105.png)
+
+###### MethNestTry.java _[source code](./MethNestTry.java)_
+```java
+class MethNestTry {
+    static void nestTry(int a) {
+        try {
+            if (a == 1) {
+                a = a / (a - a);
+            }
+
+            if (a == 2) {
+                int[] c = {1};
+                c[42] = 99;
+            }
+        } catch (ArrayIndexOutOfBoundsException err) {
+            System.out.println("==> Lỗi tràn index mảng: " + err);
+        }
+    }
+
+    public static void main(String args[]) {
+        try {
+            int a = args.length;
+            int b = 42/a;
+
+            System.out.println("a = " + a);
+            nestTry(a);
+        } catch (ArithmeticException err) {
+            System.out.println("==> Lỗi toán học: " + err);
+        }
+    }
+}
+```
+![](../images/106.png)
+
+
+# 7. _[`throw`]_
+###### ThrowDemo.java _[source code](./ThrowDemo.java)_
+```java
+class ThrowDemo {
+    static void demoProc() {
+        try {
+            throw new NullPointerException("CÓ LỖI LÀNG NƯỚC ƠI!!!");
+        } catch (NullPointerException err) {
+            System.out.println("==> Có lỗi trong method demoProc().");
+            throw err;
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            demoProc();
+        } catch (NullPointerException err) {
+            System.out.println("==> Lỗi: " + err);
+        }
+    }
+}
+```
+![](../images/107.png)
+
+# 8. _[`throws`]_
+###### ThrowsDemo.java _[source code](./ThrowsDemo.java)_
+```java
+class ThrowsDemo {
+    static void throwOne() throws IllegalAccessException {
+        System.out.println("--> Đây là hàm throwOne()");
+        throw new IllegalAccessException("CÓ LỖI LÀNG NƯỚC ƠI!");
+    }
+
+    public static void main(String[] args) {
+        try {
+            throwOne();
+        } catch (IllegalAccessException err) {
+            System.out.println("==> Lỗi: " + err);
+        }
+    }
+}
+```
+![](../images/108.png)
+
+# 9. _[`finally`]_
+###### FinallyDemo.java _[source code](./FinallyDemo.java)_
+```java
+class FinallyDemo {
+    static void procA() {
+        try {
+            System.out.println("--> Bên trong hàm procA");
+            throw new RuntimeException("CÓ LỖI LÀNG NƯỚC ƠI.");
+        } finally {
+            System.out.println("--> procA block finally.");
+        }
+    }
+
+    static void procB() {
+        try {
+            System.out.println("--> Bên trong hàm procB");
+            return;
+        } finally {
+            System.out.println("--> procB block finally.");
+        }
+    }
+
+    static void procC() {
+        try {
+            System.out.println("--> Bên trong hàm procC");
+            return;
+        } finally {
+            System.out.println("--> procC block finally.");
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            procA();
+        } catch (Exception err) {
+            System.out.println("==> Lỗi hàm main: " + err);
+        }
+
+        procB();
+        procC();
+    }
+}
+```
+![](../images/109.png)
+
+# 10. _[Java's Built-in Exceptions]_
+|Exception|Meaning|
+|-|-|
+|`ArithmeticException`| lỗi toán học, điển hình là chia cho 0|
+|`ArrayIndexOutOfBoundsException`| lỗi index nằm ngoài kích thước mảng|
+|`ArrayStoreException`|gán cho mảng một phần tử một kiểu dữ liệu ko tương tích với kiểu của mảng|
+|`ClassCastException`|lỗi casting dữ liệu vô lí|
+|`EnumConstantNotPresentException`|...|
+
+* Tìm hiểu sau
+
+# 11. _[Creating Your Own Exception Subclasses]_
+###### ExceptionDemo.java _[source code](./ExceptionDemo.java)_
+```java
+class MyException extends Exception {
+    private int detail;
+
+    MyException(int a) {
+        detail = a;
+    }
+
+    public String toString() {
+        return "MyException[" + detail + "]";
+    }
+}
+
+class ExceptionDemo {
+    static void compute(int a) throws MyException {
+        System.out.println("--> Tính toán với a = " + a);
+
+        if (a > 10) {
+            throw new MyException(a);
+        }
+
+        System.out.println("==> Kết thúc.");
+    }
+
+    public static void main(String[] args) {
+        try {
+            compute(1);
+            compute(20);
+        } catch (MyException err) {
+            System.out.println("==> Lỗi: " + err);
+        }
+    }
+}
+```
+![](../images/110.png)
+
+# 12. _[Chained Exceptions]_
+###### ChainExcDemo.java _[source code](./ChainExcDemo.java)_
+```java
+class ChainExcDemo {
+    static void demoProc() {
+        NullPointerException err = new NullPointerException("CÓ LỖI LÀNG NƯỚC ƠI");
+        err.initCause(new ArithmeticException("lỗi là tại mày, chia 0 nè con"));
+
+        throw err;
+    }
+
+    public static void main(String[] args) {
+        try {
+            demoProc();
+        } catch (NullPointerException err) {
+            System.out.println("==> Lỗi: " + err);
+            System.out.println("==> Nguyên nhân: " + err.getCause());
+        }
+    }
+}
+```
+![](../images/111.png)
+
+# 13. _[Three Additional Exception Features]_
+###### MultiCatch.java _[source code](./MultiCatch.java)_
+```java
+class MultiCatch {
+    public static void main(String[] args) {
+        int a = 10, b = 0;
+        int[] vals = { 1, 2, 3 };
+
+        try {
+            // int res = a / b;
+            vals[10] = 19;
+        } catch (ArithmeticException | ArrayIndexOutOfBoundsException err) {
+            // bắt nhiều lỗi cùng 1 lúc, ko cần phải chia nh` `catch`
+            System.out.println("==> Lỗi: " + err);
+        }
+
+        System.out.println("Kết thúc.");
+    }
+}
+```
+![](../images/112.png)
