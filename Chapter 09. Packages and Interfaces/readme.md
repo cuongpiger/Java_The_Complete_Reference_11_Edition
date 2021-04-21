@@ -445,3 +445,399 @@ class AskMe implements SharedConstants {
 }
 ```
 ![](../images/90.png)
+
+## 4.3. Interface có thể mở rộng _[Interface Can Be Extended]_
+* Một interface **x** có thể kế thừa từ một interface **y** khác bằng cách sử dụng từ khóa **`extends`**. Khi một class kế thừa từ interface **x**, thì class này phải định nghĩa toàn bộ các p.thức từ **x** và **y**.
+###### IfExtend.java _[source code](./IfExtend.java)_
+```java
+interface A {
+    void meth1();
+    void meth2();
+}
+
+interface B extends A {
+    void meth3();
+}
+
+class MyClass implements B {
+    public void meth1() {
+        System.out.println("--> Đây là meth1()");
+    }
+
+    public void meth2() {
+        System.out.println("--> Đây là meth2()");
+    }
+
+    public void meth3() {
+        System.out.println("--> Đây là meth3()");
+    }
+}
+
+class IfExtend {
+    public static void main(String args[]) {
+        MyClass ob = new MyClass();
+
+        ob.meth1();
+        ob.meth2();
+        ob.meth3();
+    }
+}
+```
+![](../images/91.png)
+
+# 5. Phương thức mặc định của Interface _[Default Interface Methods]_
+## 5.1. _[Default Method Fundamentals]_
+* Để khai báo một phương thức mặc định của interface, ta dùng từ khóa **`default`** đặt trc p.thức đó.
+###### DefaultMethodDemo.java _[source code](./DefaultMethodDemo.java)_
+```java
+interface MyIf {
+    int getNumber();
+
+    default String getString() {
+        return "--> Đây là p.thức MyIf.getString()";
+    }
+}
+
+class MyIfImp implements MyIf {
+    /*
+    * Chỉ có thể định nghĩa các p.thức ko có keyword `default` trong class `MyIf`
+    * */
+    public int getNumber() {
+        return 69;
+    }
+}
+
+class DefaultMethodDemo {
+    public static void main(String args[]) {
+        MyIfImp ob1 = new MyIfImp();
+
+        System.out.println(ob1.getNumber());
+        System.out.println(ob1.getString());
+    }
+}
+```
+![](../images/92.png)
+
+<hr>
+
+* Khi một interface **x** định nghĩa một p.thức **m** là `default`, thì các class khác kế  thừa từ **x** hoàn toàn có thể định nghĩa riêng lại **m** này trong chính class của nó.
+###### DefaultMethodDemo2.java _[source code](./DefaultMethodDemo2.java)_
+```java
+interface MyIf {
+    int getNumber();
+
+    default String getString() {
+        return "--> Đây là p.thức MyIf.getString()";
+    }
+}
+
+class MyIfImp implements MyIf {
+    /*
+     * Chỉ có thể định nghĩa các p.thức ko có keyword `default` trong class `MyIf`
+     * */
+    public int getNumber() {
+        return 69;
+    }
+
+    public String getString() {
+        return "--> Đây là p.thức MyIfImp.getString()";
+    }
+}
+
+class DefaultMethodDemo2 {
+    public static void main(String args[]) {
+        MyIfImp ob1 = new MyIfImp();
+
+        System.out.println(ob1.getNumber());
+        System.out.println(ob1.getString());
+    }
+}
+```
+![](../images/93.png)
+
+## 5.2. _[Multiple Inheritance Issues]_
+* Trường hợp kế thừa đa hình dưới đây là sai.
+```java
+interface Alpha {
+    default void reset() {
+        System.out.println("--> Đây là Alpha.reset()");
+    }
+}
+
+interface Beta {
+    default void reset() {
+        System.out.println("--> Đây là Beta.reset()");
+    }
+}
+
+/*
+* `MyClass` lúc này bị lỗi, do nó kề thừa từ 2 interface là `Alpha` và `Beta`
+*   nhưng cả hai interface này đều có cùng một default method là `reset`, nên lúc
+*   này `MyClass` ko biết liệu nên kế thừa phiên bản nào của hàm `reset`.
+* */
+/* class MyClass implements Alpha, Beta {
+    // do something
+} */
+```
+
+* Nhưng nếu trong `MyClass` định nghĩa chính hàm `reset` có riêng nó thì sẽ ko lỗi.
+###### DemoMultiInter3.java _[source code](./DemoMultiInter3.java)_
+```java
+interface Alpha {
+    default void reset() {
+        System.out.println("--> Đây là Alpha.reset()");
+    }
+}
+
+interface Beta {
+    default void reset() {
+        System.out.println("--> Đây là Beta.reset()");
+    }
+}
+
+/*
+ * `MyClass` lúc này bị lỗi, do nó kề thừa từ 2 interface là `Alpha` và `Beta`
+ *   nhưng cả hai interface này đều có cùng một default method là `reset`, nên lúc
+ *   này `MyClass` ko biết liệu nên kế thừa phiên bản nào của hàm `reset`.
+ * */
+class MyClass implements Alpha, Beta {
+    public void reset() {
+        System.out.println("--> Đây là MyClass.reset()");
+    }
+}
+
+public class DemoMultiInter3 {
+    public static void main(String args[]) {
+        MyClass ob = new MyClass();
+        ob.reset();
+    }
+}
+```
+![](../images/96.png)
+
+<hr>
+
+###### DemoMultiInter.java _[source code](./DemoMultiInter.java)_
+```java
+interface Alpha {
+    default void reset() {
+        System.out.println("--> Đây là Alpha.reset()");
+    }
+}
+
+interface Beta extends Alpha { // Beta kế thừa Alpha
+    default void reset() {
+        System.out.println("--> Đây là Beta.reset()");
+    }
+}
+
+class MyClass implements Alpha, Beta {
+
+}
+
+class DemoMultiInter {
+    public static void main(String args[]) {
+        MyClass ob = new MyClass();
+        ob.reset();
+    }
+}
+```
+![](../images/94.png)
+* Class `MyClass` sẽ gọi p.thức của lớp **con nhất** _(lớp con nhất lúc này là `Beta`)_.
+
+<hr>
+
+* Ta hoàn toàn có thể bắt p.thức **con nhất** gọi lại chính phương thức `reset` bằng từ khóa `super`.
+###### DemoMultiInter4.java _[source code](./DemoMultiInter4.java)_
+```java
+interface Alpha {
+    default void reset() {
+        System.out.println("--> Đây là Alpha.reset()");
+    }
+}
+
+interface Beta extends Alpha { // Beta kế thừa Alpha
+    default void reset() {
+        System.out.println("Gọi tham chiếu đến Alpha.reset() thông qua Beta");
+        Alpha.super.reset();
+    }
+}
+
+class MyClass implements Alpha, Beta {
+
+}
+
+class DemoMultiInter4 {
+    public static void main(String args[]) {
+        MyClass ob = new MyClass();
+        ob.reset();
+    }
+}
+```
+![](../images/97.png)
+
+<hr>
+
+* Nếu trong `MyClass` có định nghĩa hàm `reset` riêng thì nó sẽ gọi `MyClass.reset()`.
+###### DemoMultiInter2.java _[source code](./DemoMultiInter2.java)_
+```java
+interface Alpha {
+    default void reset() {
+        System.out.println("--> Đây là Alpha.reset()");
+    }
+}
+
+interface Beta extends Alpha { // Beta kế thừa Alpha
+    default void reset() {
+        System.out.println("--> Đây là Beta.reset()");
+    }
+}
+
+class MyClass implements Alpha, Beta {
+    public void reset() {
+        System.out.println("--> Đây là MyClass.reset()");
+    }
+}
+
+class DemoMultiInter2 {
+    public static void main(String args[]) {
+        MyClass ob = new MyClass();
+        ob.reset();
+    }
+}
+```
+![](../images/95.png)
+
+# 6. Sử dụng static method trong Interface _[Use static Methods in an Interace]_
+###### StaticMethodInter.java _[source code](./StaticMethodInter.java)_
+```java
+interface MyIf {
+    int getNumber();
+
+    default String getString() {
+        return "Đây là interface MyIf.getString()";
+    }
+
+    static int testStaticMethod() {
+        return 69;
+    }
+}
+
+class StaticMethodInter {
+    public static void main(String args[]) {
+        System.out.println("Gọi static method MyIf.testStaticMethod(): " + MyIf.testStaticMethod());
+    }
+}
+```
+![](../images/98.png)
+
+# 7. _[Private Interface Methods]_
+###### IfTest4.java _[source code](./IfTest4.java)_
+```java
+interface IntStack {
+    void push(int item);
+    int pop();
+
+    default int[] popNElements(int n) {
+        return getElements(n);
+    }
+
+    default int[] skipAndPopNElements(int skip, int n) {
+        getElements(skip);
+        return getElements(n);
+    }
+
+    private int[] getElements(int n) {
+        int elements[] = new int[n];
+
+        for (int i = 0; i < n; ++i) elements[i] = pop();
+        return elements;
+    }
+}
+
+class FixedStack implements IntStack {
+    private int stack[];
+    private int tos;
+
+    FixedStack(int size) {
+        stack = new int[size];
+        tos = -1;
+    }
+
+    public void push(int item) {
+        if (tos == stack.length - 1) {
+            System.out.println("Stack is full.");
+        } else {
+            stack[++tos] = item;
+        }
+    }
+
+    public int pop() {
+        if (tos < 0) {
+            System.out.println("Stack underflow.");
+            return 0;
+        }
+
+        return stack[tos--];
+    }
+}
+
+class DynStack implements IntStack {
+    private int stack[];
+    private int tos;
+
+    DynStack(int size) {
+        stack = new int[size];
+        tos = -1;
+    }
+
+    public void push(int item) {
+        if (tos == stack.length - 1) {
+            int tmp[] = new int[stack.length * 2];
+            for (int i = 0; i < stack.length; ++i) tmp[i] = stack[i];
+            stack = tmp;
+        }
+
+        stack[++tos] = item;
+    }
+
+    public int pop() {
+        if (tos < 0) {
+            System.out.println("Stack underflow.");
+            return 0;
+        } else {
+            return stack[tos--];
+        }
+    }
+}
+
+class IfTest4 {
+    public static void main(String args[]) {
+        IntStack stack;
+        DynStack stack1 = new DynStack(5);
+        FixedStack stack2 = new FixedStack(8);
+        int[] res;
+
+        stack = stack1;
+        for (int i = 0; i < 12; ++i) stack.push(i);
+
+        stack = stack2;
+        for (int i = 0; i < 8; ++i) stack.push(i);
+
+        stack = stack1;
+        res = stack.skipAndPopNElements(5, 3);
+        System.out.println("--> stack1 - Dynamic");
+        for (int i = 0; i < res.length; ++i) {
+            System.out.println("    res[" + i + "] = " + res[i]);
+        }
+
+        stack = stack2;
+        res = stack.popNElements(3);
+        System.out.println("\n--> stack2 - Fixed");
+        for (int i = 0; i < res.length; ++i) {
+            System.out.println("    res[" + i + "] = " + res[i]);
+        }
+    }
+}
+```
+![](../images/99.png)
