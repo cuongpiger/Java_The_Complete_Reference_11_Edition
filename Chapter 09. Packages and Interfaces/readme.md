@@ -171,3 +171,277 @@ class NestedIfDemo {
 }
 ```
 ![](../images/86.png)
+
+## 4.2. _[Applying Interfaces]_
+###### IfTest.java _[source code](./IfTest.java)_
+```java
+interface IntStack {
+    void push(int item);
+    int pop();
+}
+
+class FixedStack implements IntStack {
+    private int stack[];
+    private int tos;
+
+    FixedStack(int size) {
+        stack = new int[size];
+        tos = -1;
+    }
+
+    public void push(int item) {
+        if (tos == stack.length - 1) {
+            System.out.println("Stack is full.");
+        } else {
+            stack[++tos] = item;
+        }
+    }
+
+    public int pop() {
+        if (tos < 0) {
+            System.out.println("Stack underflow.");
+            return 0;
+        }
+
+        return stack[tos--];
+    }
+}
+
+class IfTest {
+    public static void main(String args[]) {
+        FixedStack stack1 = new FixedStack(5);
+        FixedStack stack2 = new FixedStack(8);
+
+        for (int i = 0; i < 5; ++i) stack1.push(i);
+        for (int i = 0; i < 8; ++i) stack2.push(i);
+
+        System.out.println("--> stack1");
+        for (int i = 0; i < 5; ++i) {
+            System.out.println("    " + stack1.pop());
+        }
+
+        System.out.println("\n--> stack2");
+        for (int i = 0; i < 8; ++i) {
+            System.out.println("    " + stack2.pop());
+        }
+    }
+}
+```
+![](../images/87.png)
+
+###### IfTest2.java _[source code](./IfTest2.java)_
+```java
+interface IntStack {
+    void push(int item);
+    int pop();
+}
+
+class DynStack implements IntStack {
+    private int stack[];
+    private int tos;
+
+    DynStack(int size) {
+        stack = new int[size];
+        tos = -1;
+    }
+
+    public void push(int item) {
+        if (tos == stack.length - 1) {
+            int tmp[] = new int[stack.length * 2];
+            for (int i = 0; i < stack.length; ++i) tmp[i] = stack[i];
+            stack = tmp;
+        }
+
+        stack[++tos] = item;
+    }
+
+    public int pop() {
+        if (tos < 0) {
+            System.out.println("Stack underflow.");
+            return 0;
+        } else {
+            return stack[tos--];
+        }
+    }
+}
+
+class IfTest2 {
+    public static void main(String args[]) {
+        DynStack stack1 = new DynStack(5);
+        DynStack stack2 = new DynStack(8);
+
+        for (int i = 0; i < 12; ++i) stack1.push(i);
+        for (int i = 0; i < 20; ++i) stack2.push(i);
+
+        System.out.println("--> stack1");
+        for (int i = 0; i < 12; ++i) {
+            System.out.println("    " + stack1.pop());
+        }
+
+        System.out.println("\n--> stack2");
+        for (int i = 0; i < 20; ++i) {
+            System.out.println("    " + stack2.pop());
+        }
+    }
+}
+```
+![](../images/88.png)
+
+###### IfTest3.java _[source code](./IfTest3.java)_
+```java
+interface IntStack {
+    void push(int item);
+    int pop();
+}
+
+class FixedStack implements IntStack {
+    private int stack[];
+    private int tos;
+
+    FixedStack(int size) {
+        stack = new int[size];
+        tos = -1;
+    }
+
+    public void push(int item) {
+        if (tos == stack.length - 1) {
+            System.out.println("Stack is full.");
+        } else {
+            stack[++tos] = item;
+        }
+    }
+
+    public int pop() {
+        if (tos < 0) {
+            System.out.println("Stack underflow.");
+            return 0;
+        }
+
+        return stack[tos--];
+    }
+}
+
+class DynStack implements IntStack {
+    private int stack[];
+    private int tos;
+
+    DynStack(int size) {
+        stack = new int[size];
+        tos = -1;
+    }
+
+    public void push(int item) {
+        if (tos == stack.length - 1) {
+            int tmp[] = new int[stack.length * 2];
+            for (int i = 0; i < stack.length; ++i) tmp[i] = stack[i];
+            stack = tmp;
+        }
+
+        stack[++tos] = item;
+    }
+
+    public int pop() {
+        if (tos < 0) {
+            System.out.println("Stack underflow.");
+            return 0;
+        } else {
+            return stack[tos--];
+        }
+    }
+}
+
+class IfTest3 {
+    public static void main(String args[]) {
+        IntStack stack;
+        DynStack stack1 = new DynStack(5);
+        FixedStack stack2 = new FixedStack(8);
+
+        stack = stack1;
+        for (int i = 0; i < 12; ++i) stack.push(i);
+
+        stack = stack2;
+        for (int i = 0; i < 8; ++i) stack.push(i);
+
+        stack = stack1;
+        System.out.println("--> stack1 - Dynamic");
+        for (int i = 0; i < 12; ++i) {
+            System.out.println("    " + stack.pop());
+        }
+
+        stack = stack2;
+        System.out.println("\n--> stack2 - Fixed");
+        for (int i = 0; i < 8; ++i) {
+            System.out.println("    " + stack.pop());
+        }
+    }
+}
+```
+![](../images/89.png)
+
+###### AskMe.java _[source code](./AskMe.java)
+```java
+import java.util.Random;
+
+interface SharedConstants {
+    final int NO = 0;
+    final int YES = 1;
+    final int MAYBE = 2;
+    final int LATER = 3;
+    final int SOON = 4;
+    final int NEVER = 5;
+}
+
+class Question implements SharedConstants {
+    Random rand = new Random();
+
+    int ask() {
+        int prob = (int)(100 * rand.nextDouble());
+
+        if (prob < 30) {
+            return NO;
+        } else if (prob < 60) {
+            return YES;
+        } else if (prob < 75) {
+            return LATER;
+        } else if (prob < 98) {
+            return SOON;
+        }
+
+        return NEVER;
+    }
+}
+
+class AskMe implements SharedConstants {
+    static void answer(int res) {
+        switch (res) {
+            case NO:
+                System.out.println("No");
+                break;
+            case YES:
+                System.out.println("Yes");
+                break;
+            case MAYBE:
+                System.out.println("Maybe");
+                break;
+            case LATER:
+                System.out.println("Later");
+                break;
+            case SOON:
+                System.out.println("Soon");
+                break;
+            case NEVER:
+                System.out.println("Never");
+                break;
+        }
+    }
+
+    public static void main(String args[]) {
+        Question q = new Question();
+
+        for (int i = 0; i < 4; ++i) {
+            answer(q.ask());
+        }
+    }
+}
+```
+![](../images/90.png)
