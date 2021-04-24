@@ -510,3 +510,133 @@ class SuspendResume {
 }
 ```
 ![](../images/121.png)
+
+# 8. [Deadlock]
+###### BankAccount.java _[source code](./BankAccount.java)_
+```java
+class BankAccount {
+    long amount = 5_000_000;
+    String account_name = "";
+
+    BankAccount(String account_name) {
+        this.account_name = account_name;
+    }
+
+    synchronized void withdraw(long amount) {
+        System.out.println(account_name + " rút số tiền " + amount + "VND");
+        this.amount -= amount;
+    }
+
+    synchronized void deposit(long amount) {
+        System.out.println(account_name + " nạp số tiền " + amount + "VND");
+        this.amount += amount;
+    }
+
+    void transferTo(BankAccount other, long amount) {
+        synchronized (this) {
+            // trừ tiền từ tài khoản này
+            this.withdraw(amount);
+
+            // nạp tiền vào tài khoản other
+            synchronized (other) {
+                other.deposit(amount);
+            }
+
+            System.out.println(this.account_name + " số dư là " + this.amount);
+            System.out.println(other.account_name + " số dư là " + other.amount);
+        }
+    }
+
+    public static void main(String[] args) {
+        BankAccount acc1 = new BankAccount("Manh Cuong");
+        BankAccount acc2 = new BankAccount("Nguyet Que");
+
+        Thread thread1 = new Thread() {
+            public void run() {
+                acc1.transferTo(acc2, 3_000_000);
+            }
+        };
+
+        Thread thread2 = new Thread() {
+            public void run() {
+                acc2.transferTo(acc1, 2_000_000);
+            }
+        };
+
+        thread1.start();
+        thread2.start();
+    }
+}
+```
+![](../images/122.png)
+
+###### Deadlock.java _[source code](./Deadlock.java)_
+```java
+class A {
+    synchronized void foo(B b) {
+        String name = Thread.currentThread().getName();
+        System.out.println(name + " đang trong hàm A.foo()");
+
+        try {
+            Thread.sleep(1000);
+        } catch (Exception err) {
+            System.out.println("Hàm A.foo() bị ngắt.");
+        }
+
+        System.out.println("Kết thúc hàm A.foo() và gọi hàm B.last()...");
+        b.last();
+    }
+
+    synchronized void last() {
+        System.out.println("Bên trong hàm A.last()");
+    }
+}
+
+class B {
+    synchronized void bar(A a) {
+        String name = Thread.currentThread().getName();
+        System.out.println(name + " đang trong hàm B.bar()");
+
+        try {
+            Thread.sleep(1000);
+        } catch (Exception err) {
+            System.out.println("Hàm B.bar() bị ngắt.");
+        }
+
+        System.out.println("Kết thúc hàm B.bar() và gọi hàm A.last()...");
+        a.last();
+    }
+
+    synchronized void last() {
+        System.out.println("Bên trong hàm B.last()");
+    }
+}
+
+class Deadlock implements Runnable {
+    A a = new A();
+    B b = new B();
+    Thread thread;
+
+    Deadlock() {
+        Thread.currentThread().setName("Luồng chính");
+        thread = new Thread(this, "RacingThread");
+    }
+
+    void deadlockStart() {
+        thread.start();
+        a.foo(b);
+        System.out.println("Quay về luồng chính...");
+    }
+
+    public void run() {
+        b.bar(a);
+        System.out.println("Quay về một luồng khác...");
+    }
+
+    public static void main(String[] args) {
+        Deadlock dl = new Deadlock();
+        dl.deadlockStart();
+    }
+}
+```
+![](../images/123.png)
