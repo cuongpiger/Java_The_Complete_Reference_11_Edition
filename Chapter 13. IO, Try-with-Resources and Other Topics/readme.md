@@ -195,3 +195,59 @@ class CopyFile {
 ![](../images/132.png)
 
 # 6. Automatically Closing a File
+###### ShowFile1.java _[source code](./ShowFile1.java)_
+```java
+import java.io.*;
+
+class ShowFile1 {
+    public static void main(String[] args) {
+        int i;
+
+        if (args.length != 1) {
+            return;
+        }
+
+        try (FileInputStream fin = new FileInputStream(args[0])) {
+            do {
+                i = fin.read();
+
+                if (i != -1) {
+                    System.out.println((char) i);
+                }
+            } while (i != -1);
+        } catch (FileNotFoundException err) {
+            System.out.println("File not found");
+        } catch (IOException err) {
+            System.out.println("An I/O error occurred");
+        }
+    }
+}
+```
+![](../images/133.png)
+
+###### CopyFile1.java _[source code](./CopyFile1.java)_
+```java
+import java.io.*;
+
+class CopyFile1 {
+    public static void main(String[] args) throws IOException {
+        int i;
+
+        if (args.length != 2) {
+            return;
+        }
+
+        try (FileInputStream fin = new FileInputStream(args[0]);
+            FileOutputStream fout = new FileOutputStream(args[1])) {
+            do {
+                i = fin.read();
+
+                if (i != -1) fout.write(i);
+            } while (i != -1);
+        } catch (IOException err) {
+            System.out.println("I/O error");
+        }
+    }
+}
+```
+![](../images/134.png)
