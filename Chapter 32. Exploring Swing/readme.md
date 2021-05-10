@@ -379,3 +379,102 @@ public class JTabbedPaneDemo {
 }
 ```
 ![](images/32_06.png)
+
+# 5. JScrollPane
+###### _[JScrollPaneDemo.java](JScrollPaneDemo.java)_
+```java
+import javax.swing.*;
+import java.awt.*;
+
+public class JScrollPaneDemo {
+    public JScrollPaneDemo() {
+        JFrame jfrm = new JFrame("JScrollPaneDemo");
+        jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jfrm.setSize(400, 400);
+
+        JPanel jp = new JPanel();
+        jp.setLayout(new GridLayout(20, 20));
+
+        int b = 0;
+        for (int i = 0; i < 20; ++i) {
+            for (int j = 0; j < 20; ++j) {
+                jp.add(new JButton("Button " + b++));
+            }
+        }
+
+        JScrollPane jsp = new JScrollPane(jp);
+        jfrm.add(jsp, BorderLayout.CENTER);
+        jfrm.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new JScrollPaneDemo();
+            }
+        });
+    }
+}
+```
+![](images/32_07.png)
+
+# 6. JList
+###### _[JListDemo.java](JListDemo.java)_
+```java
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class JListDemo {
+    String Cities[] = {
+            "New York", "Chicago", "Houston", "Denver", "Los Angeles", "Seattle",
+            "London", "Paris", "New Delhi", "Hong Kong", "Tokyo", "Sydney"
+    };
+
+    public JListDemo() {
+        JFrame jfrm = new JFrame("JListDemo");
+        jfrm.setLayout(new FlowLayout());
+        jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jfrm.setSize(200, 200);
+
+        JList<String> jlst = new JList<>(Cities);
+        jlst.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        // add the list to a scroll pane
+        JScrollPane jscrlp = new JScrollPane(jlst);
+
+        jscrlp.setPreferredSize(new Dimension(120, 90));
+
+        JLabel jlab = new JLabel("Choose a City");
+        jlst.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                int idx = jlst.getSelectedIndex();
+
+                if (idx != -1) {
+                    jlab.setText("Current selection: " + Cities[idx]);
+                } else {
+                    jlab.setText("Choose a City");
+                }
+            }
+        });
+
+        jfrm.add(jscrlp);
+        jfrm.add(jlab);
+
+        jfrm.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new JListDemo();
+            }
+        });
+    }
+}
+```
+![](images/32_08.png)
