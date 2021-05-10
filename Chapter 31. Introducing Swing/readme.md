@@ -10,7 +10,7 @@
 ## 5.3. The Top-Level Container Panes
 # 6. The Swing Packages
 # 7. A Simple Swing Application
-###### SwingDemo.java _[source code](./SwingDemo.java)_
+###### _[SwingDemo.java](./SwingDemo.java)_
 ```java
 import javax.swing.*;
 
@@ -35,10 +35,10 @@ public class SwingDemo {
     }
 }
 ```
-![](../images/138.png)
+![](./images/31_00.png)
 
 # 8. Event Handling
-###### EventDemo.java _[source code](./EventDemo.java)_
+###### _[EventDemo.java](./EventDemo.java)_
 ```java
 import java.awt.*;
 import java.awt.event.*;
@@ -89,13 +89,13 @@ public class EventDemo {
     }
 }
 ```
-![](../images/139.png)
+![](./images/31_01.png)
 
 # 9. Painting in Swing
 ## 9.1. Painting Fundamentals
 ## 9.2. Compute the Paintable Area
 ## 9.3. A Paint Example
-###### PaintDemo.java _[source code](./PaintDemo.java)_
+###### _[PaintDemo.java](./PaintDemo.java)_
 ```java
 import java.awt.*;
 import java.awt.event.*;
@@ -155,4 +155,4 @@ public class PaintDemo {
     }
 }
 ```
-![](./../images/140.png)
+![](./images/31_02.png)
