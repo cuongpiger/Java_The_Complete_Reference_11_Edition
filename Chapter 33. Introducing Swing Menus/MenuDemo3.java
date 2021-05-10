@@ -2,10 +2,10 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class MenuDemo2 implements ActionListener {
+public class MenuDemo3 implements ActionListener {
     JLabel jlab;
 
-    MenuDemo2() {
+    MenuDemo3() {
         JFrame jfrm = new JFrame("Menu Demo");
         jfrm.setLayout(new FlowLayout());
         jfrm.setSize(220, 200);
@@ -39,9 +39,9 @@ public class MenuDemo2 implements ActionListener {
 
         // create the Colors submenu
         JMenu jmColors = new JMenu("Colors");
-        JMenuItem jmiRed = new JMenuItem("Red");
-        JMenuItem jmiGreen = new JMenuItem("Green");
-        JMenuItem jmiBlue = new JMenuItem("Blue");
+        JCheckBoxMenuItem jmiRed = new JCheckBoxMenuItem("Red");
+        JCheckBoxMenuItem jmiGreen = new JCheckBoxMenuItem("Green");
+        JCheckBoxMenuItem jmiBlue = new JCheckBoxMenuItem("Blue");
         jmColors.add(jmiRed);
         jmColors.add(jmiGreen);
         jmColors.add(jmiBlue);
@@ -49,11 +49,15 @@ public class MenuDemo2 implements ActionListener {
 
         // create the Priority submenu
         JMenu jmPriority = new JMenu("Priority");
-        JMenuItem jmiHigh = new JMenuItem("High");
-        JMenuItem jmiLow = new JMenuItem("Low");
+        JRadioButtonMenuItem jmiHigh = new JRadioButtonMenuItem("High", true);
+        JRadioButtonMenuItem jmiLow = new JRadioButtonMenuItem("Low");
         jmPriority.add(jmiHigh);
         jmPriority.add(jmiLow);
         jmOptions.add(jmPriority);
+
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(jmiHigh);
+        bg.add(jmiLow);
 
         JMenuItem jmiReset = new JMenuItem("Reset");
         jmOptions.addSeparator();
@@ -99,7 +103,7 @@ public class MenuDemo2 implements ActionListener {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new MenuDemo2();
+                new MenuDemo3();
             }
         });
     }

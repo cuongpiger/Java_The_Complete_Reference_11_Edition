@@ -2,10 +2,11 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class MenuDemo1 implements ActionListener {
+public class MenuDemo4 implements ActionListener {
     JLabel jlab;
+    JPopupMenu jpu;
 
-    MenuDemo1() {
+    MenuDemo4() {
         JFrame jfrm = new JFrame("Menu Demo");
         jfrm.setLayout(new FlowLayout());
         jfrm.setSize(220, 200);
@@ -39,9 +40,9 @@ public class MenuDemo1 implements ActionListener {
 
         // create the Colors submenu
         JMenu jmColors = new JMenu("Colors");
-        JMenuItem jmiRed = new JMenuItem("Red");
-        JMenuItem jmiGreen = new JMenuItem("Green");
-        JMenuItem jmiBlue = new JMenuItem("Blue");
+        JCheckBoxMenuItem jmiRed = new JCheckBoxMenuItem("Red");
+        JCheckBoxMenuItem jmiGreen = new JCheckBoxMenuItem("Green");
+        JCheckBoxMenuItem jmiBlue = new JCheckBoxMenuItem("Blue");
         jmColors.add(jmiRed);
         jmColors.add(jmiGreen);
         jmColors.add(jmiBlue);
@@ -49,11 +50,15 @@ public class MenuDemo1 implements ActionListener {
 
         // create the Priority submenu
         JMenu jmPriority = new JMenu("Priority");
-        JMenuItem jmiHigh = new JMenuItem("High");
-        JMenuItem jmiLow = new JMenuItem("Low");
+        JRadioButtonMenuItem jmiHigh = new JRadioButtonMenuItem("High", true);
+        JRadioButtonMenuItem jmiLow = new JRadioButtonMenuItem("Low");
         jmPriority.add(jmiHigh);
         jmPriority.add(jmiLow);
         jmOptions.add(jmPriority);
+
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(jmiHigh);
+        bg.add(jmiLow);
 
         JMenuItem jmiReset = new JMenuItem("Reset");
         jmOptions.addSeparator();
@@ -63,7 +68,8 @@ public class MenuDemo1 implements ActionListener {
         jmb.add(jmOptions);
 
         JMenu jmHelp = new JMenu("Help");
-        JMenuItem jmiAbout = new JMenuItem("About");
+        ImageIcon icon = new ImageIcon("./images/penguin.png");
+        JMenuItem jmiAbout = new JMenuItem("About", icon);
         jmHelp.add(jmiAbout);
         jmb.add(jmHelp);
 
@@ -82,6 +88,41 @@ public class MenuDemo1 implements ActionListener {
         jfrm.add(jlab);
         jfrm.setJMenuBar(jmb);
         jfrm.setVisible(true);
+
+        // create an Edit popup menu
+        jpu = new JPopupMenu();
+
+        JMenuItem jmiCut = new JMenuItem("Cut");
+        JMenuItem jmiCopy = new JMenuItem("Copy");
+        JMenuItem jmiPaste = new JMenuItem("Paste");
+
+        jpu.add(jmiCut);
+        jpu.add(jmiCopy);
+        jpu.add(jmiPaste);
+
+        jmiCut.addActionListener(this);
+        jmiCopy.addActionListener(this);
+        jmiPaste.addActionListener(this);
+
+        jfrm.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                super.mousePressed(me);
+
+                if (me.isPopupTrigger()) {
+                    jpu.show(me.getComponent(), me.getX(), me.getY());
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent me) {
+                super.mousePressed(me);
+
+                if (me.isPopupTrigger()) {
+                    jpu.show(me.getComponent(), me.getX(), me.getY());
+                }
+            }
+        });
     }
 
     public void actionPerformed(ActionEvent ae) {
@@ -98,7 +139,7 @@ public class MenuDemo1 implements ActionListener {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new MenuDemo1();
+                new MenuDemo4();
             }
         });
     }
