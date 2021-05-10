@@ -478,3 +478,162 @@ public class JListDemo {
 }
 ```
 ![](images/32_08.png)
+
+# 7. JComboBox
+###### _[JComboBoxDemo.java](JComboBoxDemo.java)_
+```java
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class JComboBoxDemo {
+    String[] timepieces = {
+            "Hourglass", "Analog", "Digital", "Stopwatch"
+    };
+
+    public JComboBoxDemo() {
+        JFrame jfrm = new JFrame("JComboBoxDemo");
+        jfrm.setLayout(new FlowLayout());
+        jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jfrm.setSize(400, 250);
+
+        JComboBox<String> jcb = new JComboBox<>(timepieces);
+        jfrm.add(jcb);
+
+        JLabel jlab = new JLabel(new ImageIcon("./images/hourglass.jpg"));
+        jfrm.add(jlab);
+
+        jcb.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String s = (String) jcb.getSelectedItem();
+                jlab.setIcon(new ImageIcon("./images/" + s.toLowerCase() + ".png"));
+            }
+        });
+
+        jfrm.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new JComboBoxDemo();
+            }
+        });
+    }
+}
+```
+![](images/32_09.png)
+
+# 8. Trees
+###### _[JTreeDemo.java](JTreeDemo.java)_
+```java
+import java.awt.*;
+import javax.swing.event.*;
+import javax.swing.*;
+import javax.swing.tree.*;
+
+public class JTreeDemo {
+    public JTreeDemo() {
+        JFrame jfrm = new JFrame("JTreeDemo");
+        jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jfrm.setSize(200, 250);
+
+        // create the top node of tree
+        DefaultMutableTreeNode top = new DefaultMutableTreeNode("Options");
+
+        // create subtree of `A`
+        DefaultMutableTreeNode a = new DefaultMutableTreeNode("A");
+        top.add(a);
+        DefaultMutableTreeNode a1 = new DefaultMutableTreeNode("A1");
+        a.add(a1);
+        DefaultMutableTreeNode a2 = new DefaultMutableTreeNode("A2");
+        a.add(a2);
+
+        // create subtree of `B`
+        DefaultMutableTreeNode b = new DefaultMutableTreeNode("B");
+        top.add(b);
+        DefaultMutableTreeNode b1 = new DefaultMutableTreeNode("B1");
+        b.add(b1);
+        DefaultMutableTreeNode b2 = new DefaultMutableTreeNode("B2");
+        b.add(b2);
+        DefaultMutableTreeNode b3 = new DefaultMutableTreeNode("B3");
+        b.add(b3);
+
+        JTree tree = new JTree(top);
+        JScrollPane jsp = new JScrollPane(tree);
+        jfrm.add(jsp);
+
+        JLabel jlab = new JLabel();
+        jfrm.add(jlab, BorderLayout.SOUTH);
+
+        tree.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
+            public void valueChanged(TreeSelectionEvent tse) {
+                jlab.setText("Selection is: " + tse.getPath());
+            }
+        });
+
+        jfrm.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new JTreeDemo();
+            }
+        });
+    }
+}
+```
+![](images/32_10.png)
+
+# 9. JTable
+###### _[JTableDemo.java](JTableDemo.java)_
+```java
+import java.awt.*;
+import javax.swing.*;
+
+public class JTableDemo {
+    String[] colHeads = {"Name", "Extension", "ID#"};
+    Object[][] data = {
+            {"Gail", "4567", "865"},
+            {"Ken", "7566", "555"},
+            {"Viviane", "5634", "587"},
+            {"Melanie", "7345", "922"},
+            {"Anne", "1237", "333"},
+            {"John", "5656", "314"},
+            {"Matt", "5672", "217"},
+            {"Claire", "6741", "444"},
+            {"Erwin", "9023", "519"},
+            {"Ellen", "1134", "532"},
+            {"Jennifer", "5689", "112"},
+            {"Ed", "9030", "133"},
+            {"Helen", "6751", "145"}
+    };
+
+    public JTableDemo() {
+        JFrame jfrm = new JFrame("JTableDemo");
+        jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jfrm.setSize(300, 300);
+
+        JTable table = new JTable(data, colHeads);
+        JScrollPane jsp = new JScrollPane(table);
+        jfrm.add(jsp);
+
+        jfrm.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new JTableDemo();
+            }
+        });
+    }
+}
+```
+![](images/32_11.png)
